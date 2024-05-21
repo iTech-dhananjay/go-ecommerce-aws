@@ -1,0 +1,46 @@
+version: '3'
+services:
+  cart-service:
+    build:
+      context: ./cart-service
+    ports:
+      - "8081:8080"
+    env_file:
+      - ./cart-service/.env
+
+  payment-service:
+    build:
+      context: ./payment-service
+    ports:
+      - "8082:8080"
+    env_file:
+      - ./payment-service/.env
+
+  order-service:
+    build:
+      context: ./order-service
+    ports:
+      - "8083:8080"
+    env_file:
+      - ./order-service/.env
+
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - "8084:8080"
+    env_file:
+      - ./user-service/.env
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./api-gateway/.env
+    depends_on:
+      - cart-service
+      - payment-service
+      - order-service
+      - user-service
